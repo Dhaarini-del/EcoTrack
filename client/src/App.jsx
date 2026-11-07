@@ -1,0 +1,4 @@
+import React from 'react';import{Routes,Route,Navigate}from'react-router-dom';import{AuthProvider,useAuth}from'./auth';import Layout from './components/Layout';import Login from './pages/Login';import Dashboard from './pages/Dashboard';import Projects from './pages/Projects';import Activities from './pages/Activities';import Audit from './pages/Audit';
+function Guard({children}){const{user,loading}=useAuth();if(loading)return <div className="loading">Loading EcoTrack…</div>;return user?children:<Navigate to="/login" replace/>}
+function Inner(){return <Routes><Route path="/login" element={<Login/>}/><Route path="/" element={<Guard><Layout/></Guard>}><Route index element={<Dashboard/>}/><Route path="projects" element={<Projects/>}/><Route path="activities" element={<Activities/>}/><Route path="audit" element={<Audit/>}/></Route><Route path="*" element={<Navigate to="/" replace/>}/></Routes>}
+export default function App(){return <AuthProvider><Inner/></AuthProvider>}
